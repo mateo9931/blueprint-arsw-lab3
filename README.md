@@ -10,6 +10,13 @@ En este ejercicio se va a construír un modelo de clases para la capa lógica de
 
 ![](img/ClassDiagram1.png)
 
+
+### Integrantes
+
+Mateo Quintero
+
+Brayan Jimenez
+
 ### Parte I.
 
 1. Configure la aplicación para que funcione bajo un esquema de inyección de dependencias, tal como se muestra en el diagrama anterior.
