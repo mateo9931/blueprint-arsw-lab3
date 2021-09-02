@@ -7,4 +7,6 @@
 ">
     <context:component-scan base-package="edu.eci.arsw.blueprints"/>
     <bean id="blueprintmemory" class="edu.eci.arsw.blueprints.persistence.impl.InMemoryBlueprintPersistence"/>
+    <bean id="redundante" class="edu.eci.arsw.blueprints.filtro.impl.filtrosredundantes"/>
+    <bean id="submuestrado" class="edu.eci.arsw.blueprints.filtro.impl.filtrossubmuestrando"/>
 </beans>

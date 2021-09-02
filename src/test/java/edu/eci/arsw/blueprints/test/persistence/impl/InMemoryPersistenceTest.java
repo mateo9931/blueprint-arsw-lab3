@@ -10,6 +10,9 @@ import edu.eci.arsw.blueprints.model.Point;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
 import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.persistence.impl.InMemoryBlueprintPersistence;
+
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.Test;
@@ -68,7 +71,99 @@ public class InMemoryPersistenceTest {
                 
         
     }
+    @Test
+    public void ObtenerBlueprint() {
+        InMemoryBlueprintPersistence ibpp = new InMemoryBlueprintPersistence();
+        //Crear blueprint
+        Point[] pts = new Point[]{new Point(0, 0), new Point(10, 10)};
+        Blueprint bp = new Blueprint("john", "thepaint", pts);
+        //Guardamos blueprint
+        try {
+            ibpp.saveBlueprint(bp);
+        } catch (BlueprintPersistenceException ex) {
+            fail("Blueprint persistence failed inserting the first blueprint.");
+        }
+        //Comparar que los blueprint son iguales
+        try {
+            Blueprint blueprint = ibpp.getBlueprint("john", "thepaint");
+            assertEquals(blueprint, bp);
+        } catch (BlueprintNotFoundException ex) {
+            fail("No se encontro el bluprint correccto");
+        }
+    }
 
+    @Test(expected = BlueprintNotFoundException.class)
+    public void NoObtenerBlueprint() throws BlueprintNotFoundException {
+        InMemoryBlueprintPersistence ibpp = new InMemoryBlueprintPersistence();
+        //Crear blueprint
+        Point[] pts = new Point[]{new Point(0, 0), new Point(10, 10)};
+        Blueprint bp = new Blueprint("john", "thepaint", pts);
+        //Guardamos blueprint
+        try {
+            ibpp.saveBlueprint(bp);
+        } catch (BlueprintPersistenceException ex) {
+            fail("Blueprint persistence failed inserting the first blueprint.");
+        }
+        //Comparar que los blueprint son iguales
+        Blueprint blueprint = ibpp.getBlueprint("ElMoncho", "The Alfredo's History");
+    }
 
-    
+    @Test
+    public void EncontrarBlueprintByAuthor() {
+        InMemoryBlueprintPersistence ibpp = new InMemoryBlueprintPersistence();
+        //Crear blueprints
+        Point[] pts = new Point[]{new Point(0, 0), new Point(10, 10)};
+        Blueprint bp = new Blueprint("john", "thepaint", pts);
+        Point[] pts2 = new Point[]{new Point(0, 0), new Point(10, 10)};
+        Blueprint bp2 = new Blueprint("john", "thepaint2", pts);
+        Point[] pts3 = new Point[]{new Point(0, 0), new Point(10, 10)};
+        Blueprint bp3 = new Blueprint("john", "thepaintSequel", pts);
+        //Set de blueprints
+        Set<Blueprint> blueprintSet = new HashSet<Blueprint>();
+        blueprintSet.add(bp);
+        blueprintSet.add(bp2);
+        blueprintSet.add(bp3);
+        //Guardamos los blueprints
+        try {
+            ibpp.saveBlueprint(bp);
+            ibpp.saveBlueprint(bp2);
+            ibpp.saveBlueprint(bp3);
+        } catch (BlueprintPersistenceException ex) {
+            fail("Blueprint persistence failed inserting the first blueprint.");
+        }
+        //Comparar que los set blueprint son iguales
+        try {
+            Set<Blueprint> blueprintSetResult = ibpp.getBlueprintsByAuthor("john");
+            assertEquals(blueprintSetResult, blueprintSet);
+        } catch (BlueprintNotFoundException ex) {
+            fail("No se encontro el bluprint correccto");
+        }
+    }
+
+    @Test(expected = BlueprintNotFoundException.class)
+    public void NoEnontrarBlueprintsByAuthor() throws BlueprintNotFoundException {
+        InMemoryBlueprintPersistence ibpp = new InMemoryBlueprintPersistence();
+        //Crear blueprints
+        Point[] pts = new Point[]{new Point(0, 0), new Point(10, 10)};
+        Blueprint bp = new Blueprint("john", "thepaint", pts);
+        Point[] pts2 = new Point[]{new Point(0, 0), new Point(10, 10)};
+        Blueprint bp2 = new Blueprint("john", "thepaint2", pts);
+        Point[] pts3 = new Point[]{new Point(0, 0), new Point(10, 10)};
+        Blueprint bp3 = new Blueprint("john", "thepaintSequel", pts);
+        //Set de blueprints
+        Set<Blueprint> blueprintSet = new HashSet<Blueprint>();
+        blueprintSet.add(bp);
+        blueprintSet.add(bp2);
+        blueprintSet.add(bp3);
+        //Guardamos los blueprints
+        try {
+            ibpp.saveBlueprint(bp);
+            ibpp.saveBlueprint(bp2);
+            ibpp.saveBlueprint(bp3);
+        } catch (BlueprintPersistenceException ex) {
+            fail("Blueprint persistence failed inserting the first blueprint.");
+        }
+        //Comparar que los set blueprint son iguales
+        Set<Blueprint> blueprintSetResult = ibpp.getBlueprintsByAuthor("notJhon");
+    }
 }

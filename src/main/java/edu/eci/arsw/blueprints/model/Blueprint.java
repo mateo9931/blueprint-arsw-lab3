@@ -85,6 +85,22 @@ public class Blueprint {
         
         return true;
     }
+
+    public void updatePoint(List<Point> update) {
+        this.points = update;
+
+    }
+
+    public String getPointsString(){
+        String resultados = "";
+
+        for (Point point : points){
+            int posX = point.getX();
+            int posY = point.getY();
+            resultados += ("(X:" + posX + "," + "Y:" + posY + ")" + " - ");
+        }
+        return resultados;
+    }
     
     
     
