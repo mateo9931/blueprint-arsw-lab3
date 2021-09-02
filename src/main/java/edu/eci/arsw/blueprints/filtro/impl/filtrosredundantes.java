@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-@Component("redundancy")
+@Component("redundante")
 public class filtrosredundantes implements filtro {
     @Override
     public Blueprint filtroblueprint(Blueprint blueprint) {

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-@Component("subsampling")
+@Component("submuestrado")
 public class filtrossubmuestrando implements filtro {
     @Override
     public Blueprint filtroblueprint(Blueprint blueprint) {
